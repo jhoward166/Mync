@@ -1,0 +1,202 @@
+<html>
+ 	<head>
+		<link rel="stylesheet" type="text/css" href="partyStyles.css">
+		<?php
+			include("conn.php");
+		?>
+	</head>
+	<body>
+		<?php
+			$query = ""
+		?>
+		<h1 class="titleHeaders" >Mynk</h2>
+		<h2 class="titleHeaders" >With Your Friends<h2>
+		<button id="addSongButton" type="button" onclick="anotherOne();">Add</button> <input id="songInput" type="text"/>
+		<br>
+		<table align="center" id="queue" class = "tableStyle">
+			<th class="tableStyle">Move</th>
+			<th class = "tableStyle"> Order </th>
+			<th class = "tableStyle"> Song Name </th>
+			<th class = "tableStyle"> Artist </th>
+			<th class = "tableStyle"> Length </th>
+			<th class = "tableStyle"> Drop </th>
+			<tr class = "tableStyle">
+				<td>
+					<div class="centerIt">
+						<button id="plusButton" align="center" class="changeQueueButtons" onclick="moveSongUpInQueue(this);">+</button>
+						<br>
+						<button id="minusButton" align="center" class="changeQueueButtons" onclick="moveSongDownInQueue(this);">-</button>
+					</div>
+				</td>
+				<td class = "tableStyle">
+					1
+				</td>
+				<td class = "tableStyle">
+					Song
+				</td>
+				<td class = "tableStyle">
+					Artist
+				</td>
+				<td class = "tableStyle">
+					Length
+				</td>
+				<td class = "tableStyle">
+					<button onclick="deleteAndMove(this);"> Drop </button>
+				</td>
+			</tr>
+			<tr class = "tableStyle">
+				<td>
+					<div class="centerIt">
+						<button id="plusButton" align="center" class="changeQueueButtons" onclick="moveSongUpInQueue(this);">+</button>
+						<br>
+						<button id="minusButton" align="center" class="changeQueueButtons" onclick="moveSongDownInQueue(this);">-</button>
+					</div>
+				</td>
+				<td class = "tableStyle">
+					2
+				</td>
+				<td class = "tableStyle">
+					Swag Master Flex
+				</td>
+				<td class = "tableStyle">
+					2Pac
+				</td>
+				<td class = "tableStyle">
+					3:05
+				</td>
+				<td class = "tableStyle">
+					<button> Drop </button>
+				</td>
+			</tr>
+		</table>
+		<script>
+			/*
+			function is called by the add song button. It takes the value the is currently in the songInput input field, and adds it to the end of the table;
+			*/
+			function anotherOne(){
+				var songQueueTable = document.getElementById("queue");
+				var songQueueTableSize = songQueueTable.rows.length;
+				//alert(songQueueTableSize);
+				//create a new row
+				var newRow = songQueueTable.insertRow(songQueueTableSize);
+				newRow.className = "tableStyle";
+
+				//create the new cells
+				var newMoveCell = newRow.insertCell(0);
+				newMoveCell.className = "tableStyle";
+				var newOrderCell = newRow.insertCell(1);
+				newOrderCell.className = "tableStyle";
+				var newSongCell = newRow.insertCell(2);
+				newSongCell.className = "tableStyles";
+				var newArtistCell = newRow.insertCell(3);
+				newArtistCell.className = "tableStyle";
+				var newTimeCell = newRow.insertCell(4);
+				newTimeCell.className = "tableStyle";
+				var newDropCell = newRow.insertCell(5);
+				newTimeCell.className = "tableStyle";
+				
+				var newButtonDiv=document.createElement("div");
+				newButtonDiv.className = "centerIt";
+				//create buttons
+				var newPlusButton =document.createElement("input");
+				newPlusButton.type="button";
+				newPlusButton.className = "changeQueueButtons";
+				newPlusButton.value = "+";
+				newPlusButton.onclick = function(){
+					moveSongUpInQueue(this);
+				}
+
+				var newNewline = document.createElement("br");
+
+				var newMinusButton =document.createElement("input");
+				newMinusButton.type = "button";
+				newMinusButton.className = "changeQueueButtons";
+				newMinusButton.value = "-";
+				newMinusButton.onclick = function(){
+					moveSongDownInQueue(this);
+				}
+
+				var newDropButton =document.createElement("input");
+				newDropButton.type = "button";
+				newDropButton.value = "Drop";
+				newDropButton.onclick = function(){
+					alert("do things!")
+				}
+
+				//create text objects
+				var newOrderText = document.createTextNode(songQueueTableSize);
+				var newSongText = document.createTextNode("Song Name Here");
+				var newArtistText = document.createTextNode("That Artist You Like");
+				var newTimeText = document.createTextNode("ONE MILLION YEARS DUNGEON");
+
+				newButtonDiv.appendChild(newPlusButton);
+				newButtonDiv.appendChild(newNewline);
+				newButtonDiv.appendChild(newMinusButton);
+				newMoveCell.appendChild(newButtonDiv);
+				newOrderCell.appendChild(newOrderText);
+				newSongCell.appendChild(newSongText);
+				newArtistCell.appendChild(newArtistText);
+				newTimeCell.appendChild(newTimeText);
+				newDropCell.appendChild(newDropButton);
+
+				
+			}
+
+			function moveSongUpInQueue(callingRow){
+				var lowerRow = callingRow.parentNode.parentNode.parentNode;
+				var songQueueTable = lowerRow.parentNode;
+				var rowIndex = lowerRow.rowIndex;
+				var higherRow = lowerRow.parentNode.rows.item(rowIndex-1);
+				if(rowIndex != 1){
+					var tempSongName = lowerRow.cells.item(2).childNodes[0].data;
+					var tempArtist = lowerRow.cells.item(3).childNodes[0].data;
+					var tempLength = lowerRow.cells.item(4).childNodes[0].data;
+					lowerRow.cells.item(2).childNodes[0].data = higherRow.cells.item(2).childNodes[0].data;
+					lowerRow.cells.item(3).childNodes[0].data = higherRow.cells.item(3).childNodes[0].data;
+					lowerRow.cells.item(4).childNodes[0].data = higherRow.cells.item(4).childNodes[0].data;
+
+					higherRow.cells.item(2).childNodes[0].data = tempSongName;
+					higherRow.cells.item(3).childNodes[0].data = tempArtist;
+					higherRow.cells.item(4).childNodes[0].data = tempLength;
+				}
+				//tempRow.parentNode.rows.item(rowIndex - 2); 
+
+
+			}
+
+			function moveSongDownInQueue(callingRow){
+				var higherRow = callingRow.parentNode.parentNode.parentNode;
+				var songQueueTable = higherRow.parentNode;
+				var rowIndex = higherRow.rowIndex;
+				var lowerRow = higherRow.parentNode.rows.item(rowIndex+1);
+				if(rowIndex !=  songQueueTable.rows.length){
+					//alert(lowerRow.cells.item(2).childNodes[0].data);
+					var tempSongName = higherRow.cells.item(2).childNodes[0].data;
+					var tempArtist = higherRow.cells.item(3).childNodes[0].data;
+					var tempLength = higherRow.cells.item(4).childNodes[0].data;
+
+					higherRow.cells.item(2).childNodes[0].data = lowerRow.cells.item(2).childNodes[0].data;
+					higherRow.cells.item(3).childNodes[0].data = lowerRow.cells.item(3).childNodes[0].data;
+					higherRow.cells.item(4).childNodes[0].data = lowerRow.cells.item(4).childNodes[0].data;
+
+					lowerRow.cells.item(2).childNodes[0].data = tempSongName;
+					lowerRow.cells.item(3).childNodes[0].data = tempArtist;
+					lowerRow.cells.item(4).childNodes[0].data = tempLength;
+				}
+				
+			}
+
+			function deleteAndMove(callingRow){
+				var deleteThisRow = callingRow.parentNode.parentNode;
+				var songQueueTable = deleteThisRow.parentNode;
+				var indexOfRow = deleteThisRow.rowIndex;
+				for(var i = indexOfRow; i < songQueueTable.rows.length; i++){
+					for(var j = 2; j<songQueueTable.rows.item(i).cells.length-1; j++){
+						songQueueTable.rows.item(i-1).cells.item(j).childNodes[0].data = songQueueTable.rows.item(i).cells.item(j).childNodes[0].data;
+					}
+				}
+				songQueueTable.deleteRow(songQueueTable.rows.length-1);
+			}
+		</script>
+	</body>
+</html>

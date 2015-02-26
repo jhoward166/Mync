@@ -1,0 +1,19 @@
+.titleHeaders {
+	text-align: center;
+}
+
+.tableStyle {
+	text-align: center;
+	border-collapse: collapse;
+	border: 2px solid black;
+}
+
+.changeQueueButtons {
+	text-align: center;
+	width: 1.5em;
+	height: 1.5em;
+}
+
+.centerIt{
+	text-align: center;
+}

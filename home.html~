@@ -1,0 +1,19 @@
+<html>
+	<h1>Music</h2>
+	<h2>With Your Friends<h2>
+	<button id="addSongButton" type="button" onclick="Javascript: anotherOne();">Add</button><input id="songInput" type="text"/>
+	<br>
+	<table id="queue">
+		<tr>
+			<td>
+				<p>sup</p>
+			<td>
+		</tr
+	</table>
+	<script type="text/Javascript">
+		function anotherOne(){
+			var table = getElementById(queue);
+			
+		}
+	</script>
+</html>
